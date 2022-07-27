@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 InputNamespace=$1
-NginxPod=$(kubectl -n base-services get pods -l app.kubernetes.io/name=nginx --no-headers -o name | head -n1)
+NginxNamespace=${2:-'base-services'}
+NginxPod=$(kubectl -n "$NginxNamespace" get pods -l app.kubernetes.io/name=nginx --no-headers -o name | head -n1)
 AllNamespaces=$(kubectl get ns --no-headers --output name | cut -d "/" -f 2)
 for Namespace in ${InputNamespace:-$AllNamespaces}
 do
